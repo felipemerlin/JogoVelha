@@ -1,0 +1,796 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#101322">
+
+    <title>Merlin | Jogo da Velha</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <!-- EFEITOS DE FUNDO -->
+
+    <div class="background-effects">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+    </div>
+
+
+    <!-- PARTÍCULAS DA VITÓRIA -->
+
+    <div class="confetti-container" id="confettiContainer"></div>
+
+
+    <!-- APLICATIVO -->
+
+    <div class="app-container">
+
+
+        <!-- CABEÇALHO -->
+
+        <header class="header">
+
+            <a href="#" class="brand" aria-label="Nexus - Início">
+
+                <div class="brand-icon">
+                    <svg viewBox="0 0 40 40" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+
+                        <rect x="3" y="3" width="15" height="15"
+                            rx="4" fill="currentColor"/>
+
+                        <rect x="22" y="3" width="15" height="15"
+                            rx="4" fill="currentColor" opacity="0.45"/>
+
+                        <rect x="3" y="22" width="15" height="15"
+                            rx="4" fill="currentColor" opacity="0.45"/>
+
+                        <rect x="22" y="22" width="15" height="15"
+                            rx="4" fill="currentColor"/>
+
+                    </svg>
+                </div>
+
+                <div class="brand-name">
+                    <strong>MERLIN</strong>
+                    <span>TIC TAC TOE</span>
+                </div>
+
+            </a>
+
+
+            <!-- CONTROLES DO CABEÇALHO -->
+
+            <div class="header-actions">
+
+                <button
+                    class="header-button sound-button"
+                    id="soundToggle"
+                    type="button"
+                    aria-label="Ativar sons"
+                    aria-pressed="false"
+                    title="Ativar ou desativar sons">
+
+                    <svg class="sound-icon" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+
+                    </svg>
+
+                </button>
+
+
+                <button
+                    class="header-button theme-button"
+                    id="themeToggle"
+                    type="button"
+                    aria-label="Alternar tema"
+                    title="Alternar tema">
+
+                    <svg viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <circle cx="12" cy="12" r="4"></circle>
+
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.42 1.42"></path>
+                        <path d="m17.65 17.65 1.42 1.42"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m4.93 19.07 1.42-1.42"></path>
+                        <path d="m17.65 6.35 1.42-1.42"></path>
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- APRESENTAÇÃO -->
+
+        <main>
+
+            <section class="hero">
+
+                <div class="hero-badge">
+
+                    <span class="status-dot"></span>
+
+                    DESAFIO DE ESTRATÉGIA
+
+                </div>
+
+                <h1>
+                    O clássico jogo.<br>
+                    <span>Uma nova experiência.</span>
+                </h1>
+
+                <p>
+                    Teste sua estratégia, antecipe os movimentos
+                    e conquiste a vitória.
+                </p>
+
+            </section>
+
+
+            <!-- ÁREA PRINCIPAL DO JOGO -->
+
+            <section class="game-layout">
+
+
+                <!-- PAINEL LATERAL -->
+
+                <aside class="sidebar">
+
+
+                    <!-- PLACAR -->
+
+                    <div class="panel scoreboard-panel">
+
+                        <div class="panel-heading">
+
+                            <div>
+                                <span class="section-label">DESEMPENHO</span>
+                                <h2>Placar</h2>
+                            </div>
+
+                            <span class="score-icon">🏆</span>
+
+                        </div>
+
+
+                        <div class="scoreboard">
+
+                            <div class="score-item score-x">
+
+                                <div class="player-symbol x-symbol">
+                                    X
+                                </div>
+
+                                <div class="score-info">
+
+                                    <span id="nameX">
+                                        Jogador X
+                                    </span>
+
+                                    <strong id="scoreX">0</strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="score-divider"></div>
+
+
+                            <div class="score-item score-draw">
+
+                                <div class="draw-symbol">
+                                    =
+                                </div>
+
+                                <div class="score-info">
+
+                                    <span>Empates</span>
+
+                                    <strong id="scoreDraws">0</strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="score-divider"></div>
+
+
+                            <div class="score-item score-o">
+
+                                <div class="player-symbol o-symbol">
+                                    O
+                                </div>
+
+                                <div class="score-info">
+
+                                    <span id="nameO">
+                                        Jogador O
+                                    </span>
+
+                                    <strong id="scoreO">0</strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="reset-score-button"
+                            id="resetScoreButton"
+                            type="button">
+
+                            <svg viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round">
+
+                                <path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path>
+                                <path d="M3 3v5h5"></path>
+
+                            </svg>
+
+                            Zerar placar
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- CONFIGURAÇÕES -->
+
+                    <div class="panel settings-panel">
+
+                        <div class="panel-heading">
+
+                            <div>
+                                <span class="section-label">PERSONALIZE</span>
+                                <h2>Configurações</h2>
+                            </div>
+
+                            <span class="settings-icon">⚙</span>
+
+                        </div>
+
+
+                        <!-- MODO DE JOGO -->
+
+                        <div class="setting-group">
+
+                            <span class="setting-label">
+                                MODO DE JOGO
+                            </span>
+
+                            <div class="mode-options">
+
+                                <button
+                                    class="mode-button active"
+                                    id="modePvP"
+                                    type="button"
+                                    data-mode="pvp"
+                                    aria-pressed="true">
+
+                                    <span>👥</span>
+                                    <span>2 Jogadores</span>
+
+                                </button>
+
+                                <button
+                                    class="mode-button"
+                                    id="modeAI"
+                                    type="button"
+                                    data-mode="ai"
+                                    aria-pressed="false">
+
+                                    <span>🤖</span>
+                                    <span>Contra IA</span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DIFICULDADE DA IA -->
+
+                        <div
+                            class="setting-group difficulty-group"
+                            id="difficultyGroup"
+                            hidden>
+
+                            <span class="setting-label">
+                                DIFICULDADE
+                            </span>
+
+                            <div class="difficulty-options">
+
+                                <button
+                                    class="difficulty-button active"
+                                    type="button"
+                                    data-difficulty="easy"
+                                    aria-pressed="true">
+
+                                    Fácil
+
+                                </button>
+
+                                <button
+                                    class="difficulty-button"
+                                    type="button"
+                                    data-difficulty="medium"
+                                    aria-pressed="false">
+
+                                    Médio
+
+                                </button>
+
+                                <button
+                                    class="difficulty-button"
+                                    type="button"
+                                    data-difficulty="hard"
+                                    aria-pressed="false">
+
+                                    Difícil
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-description">
+
+                            <span class="description-icon">✦</span>
+
+                            <p id="settingsDescription">
+                                Convide alguém e descubra quem
+                                é o verdadeiro estrategista!
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </aside>
+
+
+                <!-- TABULEIRO PRINCIPAL -->
+
+                <div class="game-board-area">
+
+
+                    <div class="panel game-panel">
+
+
+                        <!-- STATUS DA PARTIDA -->
+
+                        <div class="game-top">
+
+                            <div class="round-info">
+
+                                <span class="section-label">
+                                    PARTIDA ATUAL
+                                </span>
+
+                                <h2>Campo de batalha</h2>
+
+                            </div>
+
+                            <div class="live-badge">
+
+                                <span class="status-dot"></span>
+
+                                <span>AO VIVO</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- INDICADOR DE VEZ -->
+
+                        <div
+                            class="turn-indicator"
+                            id="turnIndicator">
+
+                            <div
+                                class="turn-symbol x-symbol"
+                                id="turnSymbol">
+
+                                X
+
+                            </div>
+
+                            <div class="turn-text">
+
+                                <span id="turnLabel">
+                                    VEZ DO JOGADOR
+                                </span>
+
+                                <strong id="turnName">
+                                    Jogador X
+
+                                </strong>
+
+                            </div>
+
+                            <span class="turn-decoration">
+                                ●
+                            </span>
+
+                        </div>
+
+
+                        <!-- MENSAGEM DA PARTIDA -->
+
+                        <div
+                            class="game-message"
+                            id="gameMessage"
+                            role="status"
+                            aria-live="polite">
+
+                            Faça sua jogada e boa sorte!
+
+                        </div>
+
+
+                        <!-- TABULEIRO -->
+
+                        <div
+                            class="board"
+                            id="gameBoard"
+                            role="group"
+                            aria-label="Tabuleiro do jogo da velha">
+
+                            <button
+                                class="board-cell"
+                                type="button"
+                                data-index="0"
+                                aria-label="Casa 1 vazia">
+
+                                <span class="cell-mark" aria-hidden="true"></span>
+
+                            </button>
+
+                            <button
+                                class="board-cell"
+                                type="button"
+                                data-index="1"
+                                aria-label="Casa 2 vazia">
+
+                                <span class="cell-mark" aria-hidden="true"></span>
+
+                            </button>
+
+                            <button
+                                class="board-cell"
+                                type="button"
+                                data-index="2"
+                                aria-label="Casa 3 vazia">
+
+                                <span class="cell-mark" aria-hidden="true"></span>
+
+                            </button>
+
+                            <button
+                                class="board-cell"
+                                type="button"
+                                data-index="3"
+                                aria-label="Casa 4 vazia">
+
+                                <span class="cell-mark" aria-hidden="true"></span>
+
+                            </button>
+
+                            <button
+                                class="board-cell"
+                                type="button"
+                                data-index="4"
+                                aria-label="Casa 5 vazia">
+
+                                <span class="cell-mark" aria-hidden="true"></span>
+
+                            </button>
+
+                            <button
+                                class="board-cell"
+                                type="button"
+                                data-index="5"
+                                aria-label="Casa 6 vazia">
+
+                                <span class="cell-mark" aria-hidden="true"></span>
+
+                            </button>
+
+                            <button
+                                class="board-cell"
+                                type="button"
+                                data-index="6"
+                                aria-label="Casa 7 vazia">
+
+                                <span class="cell-mark" aria-hidden="true"></span>
+
+                            </button>
+
+                            <button
+                                class="board-cell"
+                                type="button"
+                                data-index="7"
+                                aria-label="Casa 8 vazia">
+
+                                <span class="cell-mark" aria-hidden="true"></span>
+
+                            </button>
+
+                            <button
+                                class="board-cell"
+                                type="button"
+                                data-index="8"
+                                aria-label="Casa 9 vazia">
+
+                                <span class="cell-mark" aria-hidden="true"></span>
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- LEGENDA -->
+
+                        <div class="board-legend">
+
+                            <div class="legend-item">
+
+                                <span class="legend-x">X</span>
+
+                                <span>Jogador X</span>
+
+                            </div>
+
+                            <div class="legend-separator"></div>
+
+                            <div class="legend-item">
+
+                                <span class="legend-o">O</span>
+
+                                <span id="legendO">
+                                    Jogador O
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CONTROLES -->
+
+                        <div class="game-actions">
+
+                            <button
+                                class="new-game-button"
+                                id="newGameButton"
+                                type="button">
+
+                                <svg viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+
+                                    <path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path>
+                                    <path d="M3 3v5h5"></path>
+
+                                </svg>
+
+                                NOVA PARTIDA
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- INFORMAÇÕES ABAIXO DO TABULEIRO -->
+
+                    <div class="game-tips">
+
+                        <div class="tip-icon">
+                            ✨
+                        </div>
+
+                        <div>
+
+                            <strong>Uma boa estratégia faz a diferença!</strong>
+
+                            <p>
+                                Complete uma linha, coluna ou diagonal
+                                com três símbolos iguais para vencer.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+
+        <!-- RODAPÉ -->
+
+        <footer class="footer">
+
+            <div class="footer-line"></div>
+
+            <p>
+                MERLIN <span>•</span> TIC TAC TOE
+            </p>
+
+            <span class="footer-description">
+                ESTRATÉGIA. INTELIGÊNCIA. DIVERSÃO.
+            </span>
+
+        </footer>
+
+
+    </div>
+
+
+
+    <!-- MODAL DE RESULTADO -->
+
+    <div
+        class="result-modal"
+        id="resultModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="resultTitle"
+        hidden>
+
+        <div class="result-overlay"></div>
+
+        <div class="result-card">
+
+
+            <div class="result-icon" id="resultIcon">
+                🏆
+            </div>
+
+
+            <span
+                class="result-eyebrow"
+                id="resultEyebrow">
+
+                PARTIDA FINALIZADA
+
+            </span>
+
+
+            <h2 id="resultTitle">
+                VITÓRIA!
+            </h2>
+
+
+            <p
+                class="result-description"
+                id="resultDescription">
+
+                Parabéns! Você venceu essa partida.
+
+            </p>
+
+
+            <!-- ESTATÍSTICAS DO RESULTADO -->
+
+            <div class="result-details">
+
+                <div class="result-detail">
+
+                    <span>VENCEDOR</span>
+
+                    <strong id="resultWinner">
+                        Jogador X
+
+                    </strong>
+
+                </div>
+
+                <div class="result-detail">
+
+                    <span>RESULTADO</span>
+
+                    <strong id="resultScore">
+                        X venceu
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- BOTÕES DO RESULTADO -->
+
+            <div class="result-actions">
+
+                <button
+                    class="play-again-button"
+                    id="playAgainButton"
+                    type="button">
+
+                    <span>↻</span>
+                    JOGAR NOVAMENTE
+
+                </button>
+
+                <button
+                    class="close-result-button"
+                    id="closeResultButton"
+                    type="button">
+
+                    VOLTAR AO TABULEIRO
+
+                </button>
+
+            </div>
+
+
+            <div class="result-footer">
+                Merlin • TIC TAC TOE
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- REGIÃO PARA AVISOS ACESSÍVEIS -->
+
+    <div
+        id="announcer"
+        class="visually-hidden"
+        aria-live="assertive"
+        aria-atomic="true">
+
+    </div>
+
+
+</body>
+
+</html>
